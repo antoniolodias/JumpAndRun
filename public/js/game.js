@@ -3,11 +3,7 @@
     const menuScene = {
         key: "menu",
         active: true,
-        renderToTexture: true, //?
-        // x: 64,
-        // y: 64,
-        // width: 1200,
-        // height: 495,
+        renderToTexture: true,
 
         preload: function() {
             this.load.spritesheet("buttonStart", "assets/buttonStart.png", {
@@ -29,7 +25,6 @@
         create: function(config){
             this.add.text(380,200,"Welcome to Castle Bubble");
             this.add.text(330,220,"Don't forget to eat your fruit kids");
-
 
             var buttons = this.physics.add.sprite(500,370,"buttonStart").setInteractive();
             buttons.setCollideWorldBounds(true);
@@ -54,9 +49,7 @@
             var bigJumpedOnce = false;
             var playBackground = true;
 
-
             this.coinsCoords = [
-                // { x: 200, y: 475 },{ x: 200, y: 475 },{ x: 200, y: 475 }
                 { x: 400, y: 20 },{ x: 625, y: 25 },{ x: 1150, y: 25 }
             ];
 
@@ -86,7 +79,6 @@
 
                 { x: 535, y: 378 },{ x: 525, y: 378 },{ x: 515, y: 378 },{ x: 505, y: 378 },
 
-
                 { x: 330, y: 498 },{ x: 340, y: 495 },{ x: 350, y: 492 },{ x: 360, y: 490 },
                 { x: 370, y: 488 },{ x: 380, y: 486 },{ x: 390, y: 484 },{ x: 400, y: 482 },
                 { x: 410, y: 480 },{ x: 420, y: 478 },{ x: 430, y: 476 },{ x: 440, y: 474 },
@@ -113,7 +105,6 @@
                 { x: 975, y: 426 },{ x: 980, y: 429 },{ x: 985, y: 431 },{ x: 990, y: 434 },
                 { x: 995, y: 437 },{ x: 1000, y: 440 },{ x: 1005, y: 443 },{ x: 1010, y: 446 },
                 { x: 1020, y: 449 },{ x: 1030, y: 452 },{ x: 1040, y: 454 },{ x: 1050, y: 454 },
-
             ];
         },
 
@@ -127,7 +118,7 @@
             // this.game.scale.pageAlignVertically = true;
             // this.game.scale.refresh();
 
-            this.load.audio('backgroundSound01', 'assets/audio/backgoundSound01.mp3');
+            this.load.audio('backgroundSound01', 'assets/audio/backgroundSound01.mp3');
             this.load.audio('coinSound', 'assets/audio/coinSound.mp3');
             this.load.audio('appleSound', 'assets/audio/appleSound.mp3');
             this.load.audio('doorSound', 'assets/audio/doorSound.mp3');
@@ -157,7 +148,6 @@
         create: function() {
             // console.log("load method: ", this.load.image);
 
-
             var backgroundSound01 = this.sound.add('backgroundSound01', { loop: true });
             backgroundSound01.play();
 
@@ -170,7 +160,6 @@
             // backgroundSound01.pause();
             // backgroundSound01.resume();
             // game.sound.setDecodedCallback([ backgroundSound01 ], start, this);
-
 
            platforms = this.physics.add.staticGroup();
            platforms.enableBody = true;
@@ -188,7 +177,6 @@
            doors = this.physics.add.sprite(200, 460, "door");
            doors.setCollideWorldBounds(true);
 
-           // sprite = this.physics.add.sprite(280, 475, "player");
            sprite = this.physics.add.sprite(280, 270, "player");
 
             sprite.setCollideWorldBounds(true);
@@ -317,6 +305,7 @@
                sprite.setTexture("playerBig", 0, false);
            };
            function collectmushroom(sprite, mushroom) {
+               appleSound.play();
                mushroom.disableBody(true, true);
                sprite.setTexture("player", 0, false);
                this.playerBig = false;
@@ -330,9 +319,8 @@
 
         update: function() {
 
-
             if (this.playerWithDoor && cursors.up.isDown) {
-                // console.log("THIS", this.sound.sounds[0].isPlaying);
+
                 this.sound.sounds[0].stop()
                 game.scene.stop("level01");
                 game.scene.start("level02");
@@ -341,6 +329,7 @@
                 if (!this.playerBig) {
                     sprite.body.setSize(32, 48);
                     if (cursors.left.isDown) {
+
                         sprite.setVelocityX(-160);
                         sprite.anims.play("left", true);
                     } else if (cursors.right.isDown) {
@@ -365,15 +354,8 @@
                         sprite.setVelocityX(0);
                         sprite.anims.play("turnBig");
                     }
-                    // if (!this.bigJumpedOnce) {
-                    //     if (cursors.up.isDown) {
-                    //         sprite.setVelocityY(-300);
-                    //         this.bigJumpedOnce = true;
-                    //     }
-                    // } else {
                         if (cursors.up.isDown && sprite.body.touching.down) {
                             sprite.setVelocityY(-350);
-                        // }
                     }
                 }
         }
@@ -387,12 +369,10 @@
             var playerBig = false;
             var playerWithDoor = false;
             var openDoor = false;
-            // var bigJumpedOnce = false;
 
             this.coinsCoords = [
                 { x: 900, y: 475 },{ x: 330, y: 380 },{ x: 50, y: 370 }
                 // { x: 330, y: 300 },{ x: 330, y: 300 },{ x: 330, y: 300 }
-
             ];
 
             this.platformsCoords = [
@@ -420,20 +400,21 @@
                 { x: 440, y: 140 },{ x: 440, y: 120 },{ x: 440, y: 100 }
 
             ];
-
-
         },
 
         preload: function() {
-            console.log('[Level01] preload');
             this.load.image("sky02", "assets/background02.png");
             this.load.image("section02", "assets/section02.png");
+            this.load.audio('backgroundSound02', 'assets/audio/backgroundSound02.mp3');
         },
 
         create: function() {
+            var backgroundSound02 = this.sound.add('backgroundSound02', { loop: true });
+            backgroundSound02.play();
 
-            console.log("LEVEL 02");
-
+            var coinSound = this.sound.add('coinSound');
+            var appleSound = this.sound.add('appleSound');
+            var doorSound = this.sound.add('doorSound');
 
            platforms = this.physics.add.staticGroup();
            platforms.enableBody = true;
@@ -451,10 +432,7 @@
            doors = this.physics.add.sprite(330, 300, "door");
            doors.body.allowGravity = false;
 
-           // doors.setCollideWorldBounds(true);
-
            sprite = this.physics.add.sprite(30, 450, "player");
-           // sprite = this.physics.add.sprite(370, 300, "player");
 
            sprite.setCollideWorldBounds(true);
            this.add.image(0, 0, "section02").setOrigin(0, 0);
@@ -464,8 +442,7 @@
                self.playerBig = false;
                self.playerWithDoor = false;
                self.openDoor = false;
-               // self.bigJumpedOnce = false;
-               // backgroundSound02.stop();
+               backgroundSound02.stop();
                game.scene.stop("level02");
                game.scene.start("level02");
            });
@@ -475,8 +452,6 @@
 
            cursors = this.input.keyboard.createCursorKeys();
 
-           // apples = this.physics.add.group();
-           // apples.create(450, 475, "apple");
            apples = this.physics.add.sprite(1100, 400, "apple");
            apples.body.allowGravity = false;
 
@@ -514,21 +489,25 @@
            this.physics.add.overlap(sprite, doors, enterDoor, null, this);
 
            function collectcoin(sprite, coin) {
+               coinSound.play();
                console.log("coin");
                coin.disableBody(true, true);
 
                if (coins.countActive(true) === 0) {
                    doors.setTexture("doorOpen", 0, false);
                    this.openDoor = true;
+                   doorSound.play()
                }
            };
            function collectapple(sprite, apple) {
+               appleSound.play();
                sprite.setVelocityY(-100);
                apple.disableBody(true, true);
                this.playerBig = true;
                sprite.setTexture("playerBig", 0, false);
            };
            function collectmushroom(sprite, mushroom) {
+               appleSound.play();
                mushroom.disableBody(true, true);
                sprite.setTexture("player", 0, false);
                this.playerBig = false;
@@ -542,7 +521,8 @@
 
         update: function() {
             if (this.playerWithDoor && cursors.up.isDown && !this.playerBig) {
-                console.log("yo");
+                // console.log(this.sound.sounds);
+                this.sound.sounds[4].stop();
                 game.scene.stop("level02");
                 game.scene.start("level03");
             } else {
@@ -573,15 +553,8 @@
                         sprite.setVelocityX(0);
                         sprite.anims.play("turnBig");
                     }
-                    // if (!this.bigJumpedOnce) {
-                    //     if (cursors.up.isDown) {
-                    //         sprite.setVelocityY(-300);
-                    //         this.bigJumpedOnce = true;
-                    //     }
-                    // } else {
                         if (cursors.up.isDown && sprite.body.touching.down) {
                             sprite.setVelocityY(-360);
-                        // }
                     }
                 }
             }
@@ -591,14 +564,13 @@
 const level03Scene = {
     key: 'level03',
     active: false,
-    renderToTexture: true, //?
+    renderToTexture: true,
 
 
     init: function(config) {
         var playerBig = false;
         var playerWithDoor = false;
         var openDoor = false;
-        // var bigJumpedOnce = false;
 
         this.platformsCoords = [
             { x: -20, y: 300 },{ x: -20, y: 200 },{ x: -20, y: 150 },{ x: -20, y: 100 },{ x: -20, y: 50 },
@@ -610,7 +582,6 @@ const level03Scene = {
 
             { x: 25, y: 250 },{ x: 75, y: 250 },{ x: 125, y: 250 },{ x: 175, y: 250 },
             { x: 225, y: 250 },{ x: 275, y: 250 },{ x: 325, y: 250 },{ x: 375, y: 250 },{ x: 375, y: 272 },
-            // { x: 25, y: 250 },{ x: 75, y: 250 },{ x: 125, y: 250 },{ x: 175, y: 250 },
 
             { x: 200, y: 370 },{ x: 250, y: 370 },{ x: 300, y: 370 },{ x: 350, y: 370 },{ x: 400, y: 370 },
             { x: 450, y: 370 },{ x: 500, y: 370 },{ x: 550, y: 370 },{ x: 600, y: 370 },{ x: 650, y: 370 },
@@ -633,13 +604,24 @@ const level03Scene = {
                 frameWidth: 60,
                 frameHeight: 30
             });
+
+            this.load.audio('backgroundSound03', 'assets/audio/backgroundSound03.mp3');
+            this.load.audio('oldDoorSound', 'assets/audio/oldDoorSound.mp3');
+            this.load.audio('wolfSound', 'assets/audio/wolfSound.mp3');
+            this.load.audio('wolfBiteSound', 'assets/audio/wolfBiteSound.mp3');
+            this.load.audio('hurtSound', 'assets/audio/wolfBiteSound.mp3');
     },
 
     create: function() {
-        console.log("LEVEL 03");
-
-
-
+        var backgroundSound03 = this.sound.add('backgroundSound03', { loop: true });
+        backgroundSound03.play();
+        var wolfSound = this.sound.add('wolfSound');
+        wolfSound.play();
+        var coinSound = this.sound.add('coinSound');
+        var appleSound = this.sound.add('appleSound');
+        var oldDoorSound = this.sound.add('oldDoorSound');
+        var hurtSound = this.sound.add('hurtSound');
+        var wolfBiteSound = this.sound.add('wolfBiteSound');
 
        this.anims.create({
            key: "rightWolf",
@@ -664,10 +646,6 @@ const level03Scene = {
            frames: [{ key: "wolf", frame: 4 }],
            frameRate: 20
        });
-
-
-
-
 
            platforms = this.physics.add.staticGroup();
            platforms.enableBody = true;
@@ -694,8 +672,7 @@ const level03Scene = {
                self.playerBig = false;
                self.playerWithDoor = false;
                self.openDoor = false;
-               // self.bigJumpedOnce = false;
-               // backgroundSound03.stop();
+               backgroundSound03.stop();
                game.scene.stop("level03");
                game.scene.start("level03");
            });
@@ -708,6 +685,7 @@ const level03Scene = {
 
 
            apples = this.physics.add.staticGroup().create(850, 400, "apple");
+           // apples.setCollideWorldBounds(true);
 
            mushrooms = this.physics.add.staticGroup().create(600, 335, "mushroom");
 
@@ -747,28 +725,34 @@ const level03Scene = {
            function hitWolf(sprite, wolf){
                this.physics.pause();
                sprite.setTint(0xff0000);
-               sprite.anims.play("turn");
+               // sprite.anims.play("turn");
                sprite.anims.stop();
                wolf.anims.stop();
                gameOver = true;
+               hurtSound.play();
+               wolfBiteSound.play();
            }
 
            function collectcoin(sprite, coin) {
+               coinSound.play();
                console.log("coin");
                coin.disableBody(true, true);
 
                if (coins.countActive(true) === 0) {
                    doors.setTexture("doorOpen", 0, false);
                    this.openDoor = true;
+                   oldDoorSound.play()
                }
            };
            function collectapple(sprite, apple) {
+               appleSound.play();
                sprite.setVelocityY(-100);
                apple.disableBody(true, true);
                this.playerBig = true;
                sprite.setTexture("playerBig", 0, false);
            };
            function collectmushroom(sprite, mushroom) {
+               appleSound.play();
                mushroom.disableBody(true, true);
                sprite.setTexture("player", 0, false);
                this.playerBig = false;
@@ -782,7 +766,8 @@ const level03Scene = {
 
         update: function() {
             if (this.playerWithDoor && cursors.up.isDown) {
-                console.log("yo");
+                // console.log(this.sound.sounds);
+                this.sound.sounds[8].stop();
                 game.scene.stop("level03");
                 game.scene.start("finalScene");
             } else {
@@ -820,15 +805,8 @@ const level03Scene = {
                         sprite.setVelocityX(0);
                         sprite.anims.play("turnBig");
                     }
-                    // if (!this.bigJumpedOnce) {
-                    //     if (cursors.up.isDown) {
-                    //         sprite.setVelocityY(-300);
-                    //         this.bigJumpedOnce = true;
-                    //     }
-                    // } else {
                         if (cursors.up.isDown && sprite.body.touching.down) {
                             sprite.setVelocityY(-350);
-                        // }
                     }
                 }
             }
@@ -838,7 +816,6 @@ const level03Scene = {
 const finalScene = {
     key: "finalScene",
     active: false,
-    // renderToTexture: true,
 
     preload: function() {
         this.load.spritesheet("buttonGoodbye", "assets/buttonGoodbye.png", {
@@ -857,7 +834,7 @@ const finalScene = {
 
     const gameConfig = {
         type: Phaser.AUTO,
-        parent: 'phaser-example',//?
+        parent: 'phaser-example',
         width: 1200,
         height: 495,
         physics: {
