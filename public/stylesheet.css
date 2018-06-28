@@ -14,22 +14,6 @@ body {
     align-items: center;
 }
 
-canvas {
+/* canvas {
     position: relative;
-}
-
-#grid {
-    position: absolute;
-    /* top: 55px; */
-    left: 167px;
-    height: 600px;
-    width: 1200px;
-
-    z-index: 2;
-    font-size: 10px;
-    color: grey;
-}
-
-th {
-    border: 1px solid grey;
-}
+} */
