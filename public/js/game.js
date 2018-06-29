@@ -50,6 +50,7 @@
             var playBackground = true;
 
             this.coinsCoords = [
+                // { x: 250, y: 450 },{ x: 250, y: 450 },{ x: 250, y: 450 },
                 { x: 400, y: 20 },{ x: 625, y: 25 },{ x: 1150, y: 25 }
             ];
 
@@ -177,6 +178,7 @@
            doors = this.physics.add.sprite(200, 460, "door");
            doors.setCollideWorldBounds(true);
 
+           // sprite = this.physics.add.sprite(300, 430, "player");
            sprite = this.physics.add.sprite(280, 270, "player");
 
             sprite.setCollideWorldBounds(true);
@@ -310,16 +312,18 @@
                sprite.setTexture("player", 0, false);
                this.playerBig = false;
            };
-           function enterDoor(sprite, door) {
-               if (this.openDoor) {
-                   this.playerWithDoor = true;
-               }
+
+           function enterDoor(sprite, doors) {
+                   if (this.openDoor) {
+                       this.playerWithDoor = true;
+                   }
+
            };
         },
 
         update: function() {
 
-            if (this.playerWithDoor && cursors.up.isDown) {
+            if (this.playerWithDoor && cursors.up.isDown && sprite.x > 180 && sprite.x <220 && sprite.y > 400) {
 
                 this.sound.sounds[0].stop()
                 game.scene.stop("level01");
@@ -382,6 +386,9 @@
             ];
 
             this.miniPlatformsCoords = [
+                { x: 15, y: 300 },{ x: 25, y: 280 },{ x: 35, y: 260 },{ x: 45, y: 240 },{ x: 55, y: 220 },{ x: 75, y: 220 },{ x: 95, y: 220 },
+                { x: 190, y: 210 },{ x: 210, y: 250 },
+
                 { x: 5, y: 410 },{ x: 15, y: 410 },{ x: 25, y: 410 },{ x: 35, y: 410 },{ x: 45, y: 410 },
                 { x: 55, y: 410 },{ x: 65, y: 410 },{ x: 75, y: 410 },{ x: 85, y: 410 },{ x: 95, y: 410 },{ x: 95, y: 440 },
 
@@ -416,14 +423,14 @@
             var appleSound = this.sound.add('appleSound');
             var doorSound = this.sound.add('doorSound');
 
-           platforms = this.physics.add.staticGroup();
-           platforms.enableBody = true;
-           this.platformsCoords.forEach(function(coord) {
-               platforms.create(coord.x, coord.y, "green50");
-           });
-           this.miniPlatformsCoords.forEach(function(coord) {
-               platforms.create(coord.x, coord.y, "green10");
-           });
+            platforms = this.physics.add.staticGroup();
+            platforms.enableBody = true;
+            this.platformsCoords.forEach(function(coord) {
+                platforms.create(coord.x, coord.y, "green50");
+            });
+            this.miniPlatformsCoords.forEach(function(coord) {
+                platforms.create(coord.x, coord.y, "green10");
+            });
            this.add.image(0, 0, "sky02").setOrigin(0, 0);
 
            floor = this.physics.add.staticGroup();
@@ -432,6 +439,7 @@
            doors = this.physics.add.sprite(330, 300, "door");
            doors.body.allowGravity = false;
 
+           // sprite = this.physics.add.sprite(250, 300, "player");
            sprite = this.physics.add.sprite(30, 450, "player");
 
            sprite.setCollideWorldBounds(true);
@@ -513,6 +521,9 @@
                this.playerBig = false;
            };
            function enterDoor(sprite, door) {
+               // console.log("door X:", door.x);
+               // console.log("sprite X:", sprite.x);
+               // console.log("sprite Y:", sprite.y);
                if (this.openDoor) {
                    this.playerWithDoor = true;
                }
@@ -520,7 +531,7 @@
         },
 
         update: function() {
-            if (this.playerWithDoor && cursors.up.isDown && !this.playerBig) {
+            if (this.playerWithDoor && cursors.up.isDown && !this.playerBig && sprite.x > 320 && sprite.x < 340 && sprite.y > 300 && sprite.y < 320) {
                 // console.log(this.sound.sounds);
                 this.sound.sounds[4].stop();
                 game.scene.stop("level02");
@@ -573,15 +584,18 @@ const level03Scene = {
         var openDoor = false;
 
         this.platformsCoords = [
-            { x: -20, y: 300 },{ x: -20, y: 200 },{ x: -20, y: 150 },{ x: -20, y: 100 },{ x: -20, y: 50 },
+            { x: -20, y: 350 },{ x: -20, y: 300 },{ x: -20, y: 200 },{ x: -20, y: 150 },{ x: -20, y: 100 },{ x: -20, y: 50 },
 
             { x: 1220, y: 250 },{ x: 1220, y: 200 },{ x: 1220, y: 150 },{ x: 1220, y: 100 },{ x: 1220, y: 50 },
 
-            { x: 25, y: 370 },{ x: 75, y: 370 },{ x: 75, y: 420 },{ x: 75, y: 470 },
-            { x: 200, y: 420 },{ x: 200, y: 470 },{ x: 500, y: 420 },{ x: 500, y: 470 },
+            { x: 25, y: 420 },{ x: 75, y: 420 },{ x: 125, y: 420 },
+            { x: 200, y: 420 },{ x: 200, y: 470 },{ x: 750, y: 420 },{ x: 750, y: 470 },
 
             { x: 25, y: 250 },{ x: 75, y: 250 },{ x: 125, y: 250 },{ x: 175, y: 250 },
-            { x: 225, y: 250 },{ x: 275, y: 250 },{ x: 325, y: 250 },{ x: 375, y: 250 },{ x: 375, y: 272 },
+            { x: 225, y: 250 },{ x: 275, y: 250 },{ x: 325, y: 250 },{ x: 375, y: 250 },
+
+            { x: 25, y: 272 },{ x: 75, y: 272 },{ x: 125, y: 272 },{ x: 175, y: 272 },
+            { x: 225, y: 272 },{ x: 275, y: 272 },{ x: 325, y: 272 },{ x: 375, y: 272 },
 
             { x: 200, y: 370 },{ x: 250, y: 370 },{ x: 300, y: 370 },{ x: 350, y: 370 },{ x: 400, y: 370 },
             { x: 450, y: 370 },{ x: 500, y: 370 },{ x: 550, y: 370 },{ x: 600, y: 370 },{ x: 650, y: 370 },
@@ -591,7 +605,8 @@ const level03Scene = {
             { x: 970, y: 320 },{ x: 1020, y: 320 },{ x: 1070, y: 320 },{ x: 1120, y: 320 },{ x: 1170, y: 320 },
         ];
         this.coinsCoords = [
-            { x: 250, y: 200 },{ x: 50, y: 320 },{ x: 450, y: 320 },
+
+            { x: 250, y: 200 },{ x: 420, y: 230 },{ x: 520, y: 320 }
         ];
     },
 
@@ -647,14 +662,14 @@ const level03Scene = {
            frameRate: 20
        });
 
+
+           floor = this.physics.add.staticGroup();
+           floor.create(100, 500, "floor");
            platforms = this.physics.add.staticGroup();
            platforms.enableBody = true;
            this.platformsCoords.forEach(function(coord) {
                platforms.create(coord.x, coord.y, "green50");
            });
-
-           floor = this.physics.add.staticGroup();
-           floor.create(800, 500, "floor");
 
            this.add.image(0, 0, "sky03").setOrigin(0, 0);
 
@@ -662,7 +677,7 @@ const level03Scene = {
 
            doors.setCollideWorldBounds(true);
 
-           sprite = this.physics.add.sprite(550, 450, "player");
+           sprite = this.physics.add.sprite(20, 350, "player");
 
            this.add.image(0, 0, "section03").setOrigin(0, 0);
 
@@ -684,7 +699,7 @@ const level03Scene = {
            wolf.body.velocity.x = 150;
 
 
-           apples = this.physics.add.staticGroup().create(850, 400, "apple");
+           apples = this.physics.add.staticGroup().create(760, 270, "apple");
            // apples.setCollideWorldBounds(true);
 
            mushrooms = this.physics.add.staticGroup().create(600, 335, "mushroom");
@@ -765,7 +780,8 @@ const level03Scene = {
         },
 
         update: function() {
-            if (this.playerWithDoor && cursors.up.isDown) {
+            if (this.playerWithDoor && cursors.up.isDown && !this.playerBig && sprite.x > 1090 && sprite.x < 1110 && sprite.y > 250 && sprite.y < 270) {
+
                 // console.log(this.sound.sounds);
                 this.sound.sounds[8].stop();
                 game.scene.stop("level03");
@@ -806,7 +822,7 @@ const level03Scene = {
                         sprite.anims.play("turnBig");
                     }
                         if (cursors.up.isDown && sprite.body.touching.down) {
-                            sprite.setVelocityY(-350);
+                            sprite.setVelocityY(-330);
                     }
                 }
             }
